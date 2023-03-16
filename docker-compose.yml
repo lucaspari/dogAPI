@@ -6,12 +6,29 @@ services:
     restart: always
     environment: 
       MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'dog'
-      MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'root'
     ports:
     - '3306:3306'
+    networks:
+      springboot-mysql:
     volumes:
     - my-db:/var/lib/mysql
+  app:
+    image: dog-api
+    restart: always
+    depends_on:
+      - db
+    container_name: springboot-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    networks:
+      springboot-mysql:
+    ports:
+    - '8080:8080'
+
 volumes:
   my-db:
+networks:
+   springboot-mysql:
