@@ -1,0 +1,35 @@
+name: Java CI with Docker MySQL
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: maven:3.8.3-openjdk-17
+      ports:
+        - 3306:3306
+      env:
+        SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/test
+        SPRING_DATASOURCE_USERNAME: root
+        SPRING_DATASOURCE_PASSWORD: password
+        SPRING_PROFILES_ACTIVE: unit-test
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and test
+      run: mvn -B verify
