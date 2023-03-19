@@ -14,11 +14,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/dog")
 public class DogController {
-    @Autowired
-    private ModelMapper modelMapper;
 
+    private final ModelMapper modelMapper;
+
+    private final DogService dogService;
     @Autowired
-    private DogService dogService;
+    public DogController(DogService dogService,ModelMapper modelMapper){
+        this.dogService = dogService;
+        this.modelMapper = modelMapper;
+    }
     @GetMapping("/")
     public String getMessage(){
         return "Hello Dog";
