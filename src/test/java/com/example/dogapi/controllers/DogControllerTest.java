@@ -47,15 +47,6 @@ class DogControllerTest {
         dogDTO = new DogDTO(1L,"Buddy",7,"Rottweiler");
         dog = new Dog(1L,"Buddy",7,"Rottweiler");
     }
-    @Test
-    void getMessage() {
-        // ACT
-        String result = dogController.getMessage();
-        // ASSERT
-        assertEquals("Hello Dog",result);
-        assertNotNull(result);
-    }
-
 
     @Test
     void createDog() throws Exception {

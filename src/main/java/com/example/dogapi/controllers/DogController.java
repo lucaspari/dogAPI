@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 
 @RestController
 @RequestMapping("/api/v1/dog")
@@ -24,8 +26,8 @@ public class DogController {
         this.modelMapper = modelMapper;
     }
     @GetMapping("/")
-    public String getMessage(){
-        return "Hello Dog";
+    public String getMessage(Principal principal){
+        return "Hello Dog, you're " + principal.getName();
     }
 
     @PostMapping("/create")
